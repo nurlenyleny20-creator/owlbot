@@ -111,11 +111,9 @@ await ctx.reply(
 // INPUT AMOUNT
 // ==========================
 bot.action("input_amount", async (ctx) => {
-  await ctx.reply(
-  `@${ctx.from.username || "User"} Click the button below to get the payment address and payment amount.
-
-The payment amount must be the same as the displayed amount, otherwise the robot cannot check whether it has been received.`,
-  );
+await ctx.reply(
+"💰 Please type the transaction amount.\n\nExample:\n100"
+);
 });
 
 // ==========================
