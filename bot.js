@@ -112,7 +112,9 @@ await ctx.reply(
 // ==========================
 bot.action("input_amount", async (ctx) => {
   await ctx.reply(
-    "💰 Please type the transaction amount.\n\nExample:\n100"
+  `@${ctx.from.username || "User"} Click the button below to get the payment address and payment amount.
+
+The payment amount must be the same as the displayed amount, otherwise the robot cannot check whether it has been received.`,
   );
 });
 
@@ -120,12 +122,13 @@ bot.action("input_amount", async (ctx) => {
 // SHOW PAYMENT INFO
 // ==========================
 bot.on("text", async (ctx) => {
-
   const amount = ctx.message.text;
-userData[ctx.from.id] = {
-  amount: amount
-};
+
+  if (!userData[ctx.from.id]) userData[ctx.from.id] = {};
+  userData[ctx.from.id].amount = amount;
+
   if (isNaN(amount)) return;
+};
 
   await ctx.reply(
 `💰 Transaction Amount
@@ -136,7 +139,7 @@ Currency:
 USDT
 
 Status:
-Waiting For Seller`,
+Waiting For Buyers`,
     Markup.inlineKeyboard([
       [
         Markup.button.callback(
@@ -172,7 +175,6 @@ bot.action("payment_address", async (ctx) => {
 Amount : ${userData[ctx.from.id]?.amount || 0} USDT
 
 TRC20 payment address:
-
 TEJMgm44ANpkq2LZqPBXmg2an1Esk4eBWf`,
       reply_markup: {
         inline_keyboard: [
