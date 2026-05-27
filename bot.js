@@ -181,27 +181,27 @@ bot.action("yes_amount", async (ctx) => {
 });
 
 bot.action("payment_address", async (ctx) => {
-  await ctx.reply(
-  `Please pay within 60 minutes
+  await ctx.replyWithPhoto(
+    { source: "./1000070240.png" },
+    {
+      caption: `Please pay within 60 minutes
 
 Amount : ${userData[ctx.from.id]?.amount || 0} USDT
 
 TRC20 payment address:
 
 TEJMgm44ANpkq2LZqPBXmg2an1Esk4eBWf`,
-  {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { text: "I paid", callback_data: "paid" },
-          { text: "Cancel Deal", callback_data: "cancel" }
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "I paid", callback_data: "paid" },
+            { text: "Cancel Deal", callback_data: "cancel" }
+          ]
         ]
-      ]
+      }
     }
-  }
-);
+  );
 });
-
 
 bot.action("complete", async (ctx) => {
 
