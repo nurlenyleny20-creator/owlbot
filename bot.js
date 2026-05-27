@@ -11,9 +11,7 @@ bot.on("new_chat_members", async (ctx) => {
         await ctx.reply(
             `@${member.username || member.first_name}
 
-Welcome to the OwlEscrow group.
-
-Are you a buyer or a seller?`,
+Welcome to the OwlEscrow group.Are you a buyer or a seller?`,
             Markup.inlineKeyboard([
                 [
                     Markup.button.callback("Buyer", "buyer"),
