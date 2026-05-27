@@ -1,5 +1,5 @@
 const { Telegraf, Markup } = require("telegraf");
-
+const userData = {};
 const bot = new Telegraf("8745731816:AAH2XL1u0f7x51MqE_EfFBwApoG7cJKLdro");
 
 
@@ -124,7 +124,9 @@ bot.action("input_amount", async (ctx) => {
 bot.on("text", async (ctx) => {
 
   const amount = ctx.message.text;
-
+userData[ctx.from.id] = {
+  amount: amount
+};
   if (isNaN(amount)) return;
 
   await ctx.reply(
