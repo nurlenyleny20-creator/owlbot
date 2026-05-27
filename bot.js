@@ -149,21 +149,6 @@ Waiting For Seller`,
     ])
   );
 
-  await ctx.reply(
-`📦 Seller Information
-
-(SAMPLE_PRODUCT)
-
-(SAMPLE_REFERENCE)`,
-    Markup.inlineKeyboard([
-      [
-        Markup.button.callback(
-          "Review Complete",
-          "complete"
-        )
-      ]
-    ])
-  );
 });
 
 bot.action("yes_amount", async (ctx) => {
