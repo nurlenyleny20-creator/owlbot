@@ -128,7 +128,6 @@ bot.on("text", async (ctx) => {
   userData[ctx.from.id].amount = amount;
 
   if (isNaN(amount)) return;
-};
 
   await ctx.reply(
 `💰 Transaction Amount
