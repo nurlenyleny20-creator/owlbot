@@ -184,7 +184,7 @@ bot.action("payment_address", async (ctx) => {
 {
 caption: `Please pay within 60 minutes
 
-Amount : ${amount}USDT
+Amount : ${userData[ctx.from.id]?.amount || 0} USDT
 
 TRC20 payment address:
 
