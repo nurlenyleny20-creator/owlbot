@@ -30,11 +30,11 @@ bot.action("buyer", async (ctx) => {
 
 userData[ctx.from.id].role = "buyer";
     
-  await ctx.editMessageText(
-`✅ Buyer Registered
+  await ctx.editMessageText(`
+✅ Buyer Registered
 
 Role: BUYER
-');
+`);
 
 const rulesMsg = await ctx.reply(
 "⚪ Deal Rules ⚪\n\n" +
