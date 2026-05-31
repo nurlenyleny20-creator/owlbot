@@ -24,42 +24,17 @@ Welcome to the OwlEscrow group.Are you a buyer or a seller?`,
 
 
 bot.action("buyer", async (ctx) => {
+    if (!userData[ctx.from.id]) {
+    userData[ctx.from.id] = {};
+}
+
+userData[ctx.from.id].role = "buyer";
+    
   await ctx.editMessageText(
 `✅ Buyer Registered
 
 Role: BUYER
-
-You may now continue the escrow process.`,
-    Markup.inlineKeyboard([
-      [
-        Markup.button.callback(
-          "Continue Transaction",
-          "continue_demo"
-        )
-      ]
-    ])
-  );
-});
-
-bot.action("seller", async (ctx) => {
-  await ctx.editMessageText(
-`✅ Seller Registered
-
-Role: SELLER
-
-You may now continue the escrow process.`,
-    Markup.inlineKeyboard([
-      [
-        Markup.button.callback(
-          "Continue Transaction",
-          "continue_demo"
-        )
-      ]
-    ])
-  );
-});
-
-bot.action("continue_demo", async (ctx) => {
+');
 
 const rulesMsg = await ctx.reply(
 "⚪ Deal Rules ⚪\n\n" +
@@ -89,68 +64,62 @@ const rulesMsg = await ctx.reply(
 
 "Tip: Before transferring money, make sure that the customer service ID is the administrator of the @OwlEscrow channel to avoid being cheated."
 );
-
 await ctx.telegram.pinChatMessage(
-  ctx.chat.id,
-  rulesMsg.message_id
+    ctx.chat.id,
+    rulesMsg.message_id
 );
 await ctx.reply(
-  "Do you agree with the rules?",
-  Markup.inlineKeyboard([
-    [
-      Markup.button.callback(
-        "✅ Accept Rules",
-        "input_amount"
-      )
-    ]
-  ])
+    `@${ctx.from.username}, How much is your transaction amount?`
 );
+
+await ctx.reply(
+    `@${ctx.from.username}, Please enter a number (default unit $)`
+);
+
 });
 
-// ==========================
-// INPUT AMOUNT
-// ==========================
-bot.action("input_amount", async (ctx) => {
-await ctx.reply(
-"💰 Please type the transaction amount.\n\nExample:\n100"
-);
+
+bot.action("seller", async (ctx) => {
+
+    await ctx.editMessageText(`
+✅ Seller Registered
+
+Role: SELLER
+
+Waiting for buyer to continue the escrow process.
+`);
+
 });
 
 // ==========================
 // SHOW PAYMENT INFO
 // ==========================
 bot.on("text", async (ctx) => {
-  const amount = ctx.message.text;
 
-  if (!userData[ctx.from.id]) userData[ctx.from.id] = {};
-  userData[ctx.from.id].amount = amount;
+    if (!userData[ctx.from.id]) return;
+    if (userData[ctx.from.id].role !== "buyer") return;
 
-  if (isNaN(amount)) return;
+    const amount = ctx.message.text;
 
-  await ctx.reply(
-`💰 Transaction Amount
+    if (isNaN(amount)) return;
 
-${amount} USDT
+    userData[ctx.from.id].amount = amount;
 
-Currency:
-USDT
-
-Status:
-Waiting For Buyers`,
-    Markup.inlineKeyboard([
-      [
-        Markup.button.callback(
-          "✅ Confirm Amount",
-          "yes_amount"
-        )
-      ]
-    ])
-  );
+    await ctx.reply(
+        `@${ctx.from.username} Is your transaction amount ${amount}$?`,
+        Markup.inlineKeyboard([
+            [
+                Markup.button.callback("Yes", "amount_yes"),
+                Markup.button.callback("No", "amount_no")
+            ]
+        ])
+    );
 
 });
 
-bot.action("yes_amount", async (ctx) => {
-  await ctx.reply(
+bot.action("amount_yes", async (ctx) => {
+
+    await ctx.reply(
     "Click button below to get payment address.",
     Markup.inlineKeyboard([
       [
