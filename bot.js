@@ -68,6 +68,7 @@ await ctx.telegram.pinChatMessage(
     ctx.chat.id,
     rulesMsg.message_id
 );
+    console.log("PIN SUCCESS");
 await ctx.reply(
     `@${ctx.from.username}, How much is your transaction amount?`
 );
