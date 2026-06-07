@@ -1,6 +1,6 @@
 const { Telegraf, Markup } = require("telegraf");
 const userData = {};
-const bot = new Telegraf("8954489304:AAEaYiZsl_3AYvh7BpMgkjHcI2ryiXVyDcM");
+const bot = new Telegraf("8954489304:AAHn9OUb_lVSiyipXyeIm9BM93aY5tuItOE");
 
 
 bot.on("new_chat_members", async (ctx) => {
